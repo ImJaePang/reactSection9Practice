@@ -6,12 +6,12 @@ export default function NewProject({ onAdd, onCancel }) {
     const modal = useRef();
 
     const title = useRef();
-    const descrpition = useRef();
+    const description = useRef();
     const dueDate = useRef();
 
     function handleSave() {
         const enteredTitle = title.current.value;
-        const enteredDescription = descrpition.current.value;
+        const enteredDescription = description.current.value;
         const enteredDueDate = dueDate.current.value;
 
         //TODO validation ...
@@ -28,7 +28,7 @@ export default function NewProject({ onAdd, onCancel }) {
 
         onAdd({
             title: enteredTitle,
-            descrpition: enteredDescription,
+            description: enteredDescription,
             dueDate: enteredDueDate,
         });
     }
@@ -68,7 +68,7 @@ export default function NewProject({ onAdd, onCancel }) {
                 </menu>
                 <div>
                     <Input type="text" ref={title} label="Title" />
-                    <Input ref={descrpition} label="Descrpition" isTextArea />
+                    <Input ref={description} label="description" isTextArea />
                     <Input type="date" ref={dueDate} label="Due Date" />
                 </div>
             </div>
