@@ -8,7 +8,27 @@ function App() {
     const [projectState, setProjectState] = useState({
         selectedProjectId: undefined,
         projects: [],
+        tasks: [],
     });
+
+    function handleAddTask(text) {
+        setProjectState((prevState) => {
+            const taskId = Math.random();
+
+            const newTask = {
+                text : text,
+                projectId : prevState.selectedProjectId,
+                id: taskId,
+            };
+
+            return {
+                ...prevState,
+                tasks : [newTask, ...prevState.tasks]
+            };
+        });
+    }
+
+    function handleDelteTask() {}
 
     function handleSelectProject(id) {
         setProjectState((prevState) => {
@@ -54,19 +74,35 @@ function App() {
         });
     }
 
-    function handleDeleteProject(){
+    function handleDeleteProject() {
         setProjectState((prevState) => {
             return {
                 ...prevState,
                 selectedProjectId: undefined,
-                projects : prevState.projects.filter((project) => project.id !== projectState.selectedProjectId)
+                projects: prevState.projects.filter(
+                    (project) => project.id !== projectState.selectedProjectId
+                ),
             };
         });
     }
 
-    const selecctedProject = projectState.projects.find(project => project.id === projectState.selectedProjectId)
+    const selecctedProject = projectState.projects.find(
+        (project) => project.id === projectState.selectedProjectId
+    );
 
-    let content = <SelectedProject project={selecctedProject} onDelete={handleDeleteProject} />;
+    const selctedTasks = projectState.tasks.filter(
+        (taks) => taks.projectId === projectState.selectedProjectId
+    );
+
+    let content = (
+        <SelectedProject
+            project={selecctedProject}
+            onDelete={handleDeleteProject}
+            tasks={selctedTasks}
+            onAddTask={handleAddTask}
+            onDeleteTask={handleDelteTask}
+        />
+    );
 
     if (projectState.selectedProjectId === undefined) {
         content = (
@@ -79,7 +115,7 @@ function App() {
                 onCancel={handleCancelAddProject}
             />
         );
-    } 
+    }
 
     return (
         <main className="h-screen my-8 flex gap-8">
